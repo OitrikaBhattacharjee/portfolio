@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <title>Oitrika Bhattacharjee | Portfolio</title>
+  <style>
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #111118;
+  --bg-card: #1a1a24;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b8;
+  --text-muted: #606078;
+  --accent-purple: #8B5CF6;
+  --accent-blue: #4A9EFF;
+  --border: #2a2a3a;
+  --font-logo: 'Cormorant Garamond', serif;
+  --font-heading: 'Cardo', serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0a0a0f 0%, #0f0a1a 40%, #0a0f1a 70%, #0a0a0f 100%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  transition: color 0.3s ease;
+}
+
+body:has(#dark-mode-toggle:checked) {
+  --bg-primary: #fff5f7;
+  --bg-secondary: #ffe8ed;
+  --bg-card: #ffffff;
+  --text-primary: #1a0a0f;
+  --text-secondary: #6a3a45;
+  --text-muted: #a06070;
+  --accent-purple: #e63a6e;
+  --accent-blue: #ff6b9d;
+  --border: #f0c0d0;
+  background: linear-gradient(135deg, #fff5f7 0%, #fce4ec 40%, #fdf0f5 70%, #fff5f7 100%);
+  background-attachment: fixed;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 70px;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+body:has(#dark-mode-toggle:checked) header {
+  background: rgba(255, 245, 247, 0.88);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.logo {
+  font-family: var(--font-logo);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  font-style: italic;
+}
+
+.logo .tilde {
+  color: var(--accent-purple);
+  font-style: normal;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+}
+
+nav ul a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+nav ul a:hover {
+  color: var(--text-primary);
+  background: rgba(139, 92, 246, 0.15);
+}
+
+body:has(#dark-mode-toggle:checked) nav ul a:hover {
+  background: rgba(230, 58, 110, 0.1);
+}
+
+.dark-toggle {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  user-select: none;
+}
+
+.dark-toggle:hover {
+  color: var(--accent-purple);
+  border-color: var(--accent-purple);
+}
+
+#dark-mode-toggle {
+  display: none;
+}
+
+.dark-toggle::before {
+  content: "🌙 Dark";
+}
+
+body:has(#dark-mode-toggle:checked) .dark-toggle::before {
+  content: "☀️ Light";
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* HERO */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 70px;
+}
+
+.hero-inner {
+  max-width: 850px;
+  padding: 0 24px;
+}
+
+.hero-greeting {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.15s;
+}
+
+.hero-name {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  background: linear-gradient(270deg, #8B5CF6, #4A9EFF, #c084fc, #8B5CF6);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.35s,
+             shimmer 4s ease infinite 1.2s;
+}
+
+body:has(#dark-mode-toggle:checked) .hero-name {
+  background: linear-gradient(270deg, #e63a6e, #ff6b9d, #ff8fab, #e63a6e);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeUp 0.8s ease forwards 0.35s,
+             shimmer 4s ease infinite 1.2s;
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-weight: 400;
+  color: var(--accent-blue);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.55s;
+}
+
+.hero-desc {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto 40px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.75s;
+}
+
+.hero-btn {
+  display: inline-block;
+  padding: 14px 36px;
+  background: var(--accent-purple);
+  color: #ffffff;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  transition: background 0.2s ease, transform 0.2s ease;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.95s;
+}
+
+.hero-btn:hover {
+  background: var(--accent-blue);
+  transform: translateY(-3px);
+}
+
+/* PROJECTS */
+#projects {
+  padding: 100px 0;
+  background-color: rgba(17, 17, 24, 0.6);
+}
+
+body:has(#dark-mode-toggle:checked) #projects {
+  background-color: rgba(255, 232, 237, 0.5);
+}
+
+.projects-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.section-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-purple);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 48px;
+  line-height: 1.1;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(139, 92, 246, 0.2);
+  border-color: var(--accent-purple);
+}
+
+body:has(#dark-mode-toggle:checked) .card:hover {
+  box-shadow: 0 16px 40px rgba(230, 58, 110, 0.15);
+}
+
+.card-emoji {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.card-desc {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  flex-grow: 1;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.card-tags span {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(139, 92, 246, 0.12);
+  color: var(--accent-purple);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  letter-spacing: 0.05em;
+}
+
+/* CONTACT */
+#contact {
+  padding: 100px 0;
+}
+
+.contact-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.contact-info p {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.contact-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-detail-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-purple);
+}
+
+.contact-detail-value {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+body:has(#dark-mode-toggle:checked) .contact-form input:focus,
+body:has(#dark-mode-toggle:checked) .contact-form textarea:focus {
+  box-shadow: 0 0 0 3px rgba(230, 58, 110, 0.12);
+}
+
+body:has(#dark-mode-toggle:checked) .contact-form input,
+body:has(#dark-mode-toggle:checked) .contact-form textarea {
+  background: #ffffff;
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+.contact-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.form-submit {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--accent-purple);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  align-self: flex-start;
+}
+
+.form-submit:hover {
+  background: var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+/* FOOTER */
+footer {
+  padding: 60px 0 36px;
+  border-top: 1px solid var(--border);
+  background: rgba(10, 10, 15, 0.5);
+}
+
+body:has(#dark-mode-toggle:checked) footer {
+  background: rgba(255, 232, 237, 0.3);
+}
+
+.footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.footer-brand p {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 260px;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+.footer-links-group h4 {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.footer-links-group ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links-group a {
+  font-size: 14px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links-group a:hover {
+  color: var(--accent-purple);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-copyright {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.back-to-top {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.back-to-top:hover {
+  color: var(--accent-purple);
+  border-color: var(--accent-purple);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  nav ul { display: none; }
+
+  .hero-name {
+    font-size: clamp(1.8rem, 10vw, 3rem);
+  }
+
+  .hero-desc {
+    font-size: 14px;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .projects-container,
+  .contact-container,
+  .footer-container {
+    padding: 0 20px;
+  }
+
+  #projects, #contact {
+    padding: 70px 0;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <input type="checkbox" id="dark-mode-toggle" />
+
+  <header>
+    <nav>
+      <a href="#hero" class="logo"><span class="tilde">~/</span>oitrika</a>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <label for="dark-mode-toggle" class="dark-toggle"></label>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="hero">
+      <div class="hero-inner">
+        <p class="hero-greeting">Hello, I'm</p>
+        <h1 class="hero-name">Oitrika Bhattacharjee</h1>
+        <p class="hero-subtitle">Web Developer</p>
+        <p class="hero-desc">I'm a B.Tech. CSE student specializing in AI and Machine Learning. I enjoy finding patterns in data and training models, a mindset that originally grew from my love for astrophysics. Outside of my tech studies, I spend my time sketching, taking photos, and working on digital editing. I am currently looking for internships / projects to apply my skills, so feel free to explore my portfolio.</p>
+        <a href="#projects" class="hero-btn">View My Work</a>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="projects-container">
+        <p class="section-label">What I've Built</p>
+        <h2 class="section-title">My Projects</h2>
+        <div class="projects-grid">
+
+          <article class="card">
+            <div class="card-emoji">🏠</div>
+            <h3 class="card-title">StaySpot</h3>
+            <p class="card-desc">Full stack Airbnb-style rental platform. Users can list properties, upload photos, book stays and leave reviews.</p>
+            <div class="card-tags">
+              <span>React</span>
+              <span>Node.js</span>
+              <span>MongoDB</span>
+              <span>Vercel</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-emoji">📄</div>
+            <h3 class="card-title">RAG Research Assistant</h3>
+            <p class="card-desc">Upload any PDF and chat with it. Built this to stop re-reading 100 page research papers during exam season.</p>
+            <div class="card-tags">
+              <span>LangChain</span>
+              <span>FAISS</span>
+              <span>OpenAI</span>
+              <span>Python</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-emoji">🤖</div>
+            <h3 class="card-title">AgentFlow</h3>
+            <p class="card-desc">Give it a task, it breaks it down and executes using multiple AI agents. Has a simple Flask frontend.</p>
+            <div class="card-tags">
+              <span>AutoGen</span>
+              <span>Python</span>
+              <span>Flask</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-emoji">🔭</div>
+            <h3 class="card-title">StarDrift</h3>
+            <p class="card-desc">Personal astrophotography journal. Logs observation sessions, plots star visibility using real NASA data and moon phases.</p>
+            <div class="card-tags">
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>NASA API</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-emoji">🎬</div>
+            <h3 class="card-title">ReelMind</h3>
+            <p class="card-desc">Movie recommendation engine trained on the MovieLens dataset. Wrapped in a Flask API with a clean frontend.</p>
+            <div class="card-tags">
+              <span>Python</span>
+              <span>Flask</span>
+              <span>Scikit-learn</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-emoji">📋</div>
+            <h3 class="card-title">DevBoard</h3>
+            <p class="card-desc">Jira-style kanban project management tool with drag and drop boards, task assignment and deadline tracking.</p>
+            <div class="card-tags">
+              <span>React</span>
+              <span>Node.js</span>
+              <span>MongoDB</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="contact-container">
+        <p class="section-label">Get in Touch</p>
+        <h2 class="section-title">Contact Me</h2>
+        <div class="contact-grid">
+
+          <div class="contact-info">
+            <p>Currently looking for internships and projects. If you have an opportunity or just want to collaborate on something interesting, my inbox is open.</p>
+            <div class="contact-detail">
+              <div class="contact-detail-item">
+                <span class="contact-detail-label">Email</span>
+                <span class="contact-detail-value">oitreeka.bh@gmail.com</span>
+              </div>
+              <div class="contact-detail-item">
+                <span class="contact-detail-label">Location</span>
+                <span class="contact-detail-value">India</span>
+              </div>
+              <div class="contact-detail-item">
+                <span class="contact-detail-label">Availability</span>
+                <span class="contact-detail-value">Open to internships and projects</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="What would you like to say?"></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send Message</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <a href="#hero" class="logo"><span class="tilde">~/</span>oitrika</a>
+          <p>CSE undergrad. Building at the intersection of AI and the web.</p>
+        </div>
+
+        <div class="footer-links-group">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-group">
+          <h4>Find Me</h4>
+          <ul>
+            <li><a href="https://github.com/OitrikaBhattacharjee" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/oitrika-bhattacharjee-2556b4387?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener">LinkedIn</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2026 Oitrika Bhattacharjee. All rights reserved.</p>
+        <a href="#hero" class="back-to-top">↑ Back to Top</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
